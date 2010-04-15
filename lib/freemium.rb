@@ -1,0 +1,2 @@
+module Freemium
+end
