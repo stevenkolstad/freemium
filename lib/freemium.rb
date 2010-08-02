@@ -1,6 +1,10 @@
-module Freemium
-	autoload :Schema, 'freemium/schema'
-	
+unless defined?(Devise)
+  require 'devise'
+end
+
+Devise.module_eval do
+#	autoload :Schema, 'freemium/schema'
+
 	#class CreditCardStorageError < RuntimeError; end
 
 
@@ -15,7 +19,7 @@ module Freemium
 
   # The gateway of choice. Default gateway is a stubbed testing gateway.
   mattr_accessor :gateway
-    @@gateway = #Freemium::Gateways::Test.new
+    @@gateway = ""#Freemium::Gateways::Test.new
 
   # You need to specify whether Freemium or your gateway's ARB module will control
   # the billing process. If your gateway's ARB controls the billing process, then
@@ -40,15 +44,17 @@ module Freemium
   # These will be bcc'd on all SubscriptionMailer emails, and will also receive the
   # admin activity report.
   mattr_accessor :admin_report_recipients
-  	@@admin_report_recipuents = 
-  
-  # Default way to setup Freemium. Run rails generate freemium to create
-  # a fresh initializer with all configuration values.
-  def self.setup
-    yield self
-  end
+  	@@admin_report_recipuents = ""
 
 end
 
-require 'freemium/activity_logger'
-require 'freemium/models'
+Devise.add_module :freemium, :controller => :payments, :model => 'freemium/model'
+
+module Freemium; end
+
+#require 'freemium/activity_logger'
+#require 'freemium/models'
+#require 'freemium/mailer'
+#require 'freemium/routes'
+#require 'freemium/schema'
+#require 'freemium/rails'

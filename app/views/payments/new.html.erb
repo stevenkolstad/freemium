@@ -1,0 +1,13 @@
+<h2>Submit Payment</h2>
+
+<% form_for resource_name, resource, :url => Braintree::TransparentRedirect.url do |f| %>
+	<form method="POST" action="<%= Braintree::TransparentRedirect.url %>">
+  <%= f.error_messages %>
+<input type="hidden" name="tr_data" value="<%= ERB::Util.html_escape @tr_data %>" />
+  <p><%= f.label :email %></p>
+  <p><%= f.text_field :email %></p>
+
+  <p><%= f.submit "Submit payment" %></p>
+<% end %>
+
+<%= link_to "Home", after_sign_in_path_for(resource_name) %><br />
